@@ -1,0 +1,599 @@
+---
+title: "Investigating itentionality in elephant gestural communication"
+author: "Vesta Eleuteri"
+output:
+  rmdformats::material:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: false
+    highlight: tango
+    cards: true
+    code_folding: hide
+---
+
+# Load environment and required packages
+
+```{r load-libraries}
+rm(list=ls())
+load("Experiment analysis.Rdata") 
+
+#Packages for directory and data sorting
+library(here) 
+library(reshape2) 
+library(dplyr)
+library(tidyr) 
+
+#Packages for analyses
+library(lme4) #glmms
+library(emmeans) #posthoc comparisons
+library(Matrix) #glmms
+
+#Packages for plots and tables
+library(ggplot2)
+library(interactions) 
+library(scico)
+library(knitr)
+library(kableExtra)
+
+#Packages and functions for assumptions and cis
+source("diagnostic_fcns.r") #Roger Mundry function for diagnostics
+source("boot_glmm.r") #Roger Mundry function for cis
+library(car) #for vif
+library(carData)
+source("Experiment theme.R")
+source("glmm_stability.r") #Roger Mundry function for model stability check
+source("glmmTMB_stability.r") #Roger Mundry function for model stability check for glmmtmb models
+library(DHARMa) #for residuals diagnosis
+
+#knitr settings to set Rmd look
+library(knitr)
+knitr::opts_chunk$set(
+    warning = FALSE,
+    message = FALSE,
+    fig.width = 8,
+    fig.height = 6,
+    out.width = "100%",
+    cache = TRUE
+)
+```
+
+
+# Set directory
+
+```{r set-environment}
+here::i_am(file.path("Experiment analysis.Rmd")) 
+```
+
+
+# Preliminaries
+
+We removed the No-experimenter condition as all but one subject (Detema) produced all gestural actions only when the experimenter was present (thus showing that the criterion of audience directedness was met)
+```{r preliminaries}
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/dataframes")
+xdata=read.table("exp_gest_summary_df.csv", header=T, sep=",", fill=T, dec=",", stringsAsFactors=T)
+xdata=subset(xdata, ! Delivery_Phase %in% c("No-experimenter")) #drop No-experimenter condition
+xdata=droplevels(xdata) 
+
+xdata$Delivery_Phase <- relevel(xdata$Delivery_Phase, ref = "Pre-delivery")
+
+descr_gest_del_cond <- xdata %>%
+  dplyr::group_by(Experimental_Condition, Delivery_Phase) %>%
+  dplyr::summarise(
+    mean_gtokens = round(mean(Gesture_Record_Count, na.rm = TRUE), 3),
+    sd_gtokens = round(sd(Gesture_Record_Count, na.rm = TRUE), 3), 
+    min_gtokens = round(min(Gesture_Record_Count, na.rm = TRUE), 3),
+    max_gtokens = round(max(Gesture_Record_Count, na.rm = TRUE), 3),
+    mean_gtype = round(mean(Gesture_Type_Count, na.rm = TRUE), 3),
+    sd_gtype = round(sd(Gesture_Type_Count, na.rm = TRUE), 3),
+    min_gtype = round(min(Gesture_Type_Count, na.rm = TRUE), 3),
+    max_gtype = round(max(Gesture_Type_Count, na.rm = TRUE), 3)
+  )
+kable(descr_gest_del_cond, format = "html", caption = "Descriptives by experimental condition and delivery phase") %>%
+  kable_styling("striped", full_width = FALSE)
+
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results")
+write.table(descr_gest_del_cond, file="Descrip_gestures_del_phase.csv", row.names=T, col.names=T, sep="\t")
+
+descr_gest_del <- xdata %>%
+  dplyr::group_by(Delivery_Phase) %>%
+  dplyr::summarise(
+    mean_gtokens = round(mean(Gesture_Record_Count, na.rm = TRUE), 3),
+    sd_gtokens = round(sd(Gesture_Record_Count, na.rm = TRUE), 3),
+    min_gtokens = round(min(Gesture_Record_Count, na.rm = TRUE), 3),
+    max_gtokens = round(max(Gesture_Record_Count, na.rm = TRUE), 3),
+    mean_gtype = round(mean(Gesture_Type_Count, na.rm = TRUE), 3),
+    sd_gtype = round(sd(Gesture_Type_Count, na.rm = TRUE), 3),
+    min_gtype = round(min(Gesture_Type_Count, na.rm = TRUE), 3),
+    max_gtype = round(max(Gesture_Type_Count, na.rm = TRUE), 3)
+  )
+kable(descr_gest_del, format = "html", caption = "Descriptives by delivery phase") %>%
+  kable_styling("striped", full_width = FALSE)
+  
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results")
+write.table(descr_gest_del, file="Descr_gestures_del.csv", row.names=T, col.names=T, sep="\t")
+```
+
+
+# Persistence Model 
+
+To test for persistence we compared the number of gesture tokens used by subjects during item pre-delivery and post-delivery in the different conditions. The predictions are that subjects will persist gesturing more (i.e., increase their use of gesture tokens from pre to post-delivery) when their goal is not met or only partially met, as compared to met.
+
+## Box plot number gesture tokens
+
+```{r box-plot-gest-tok}
+ggplot(xdata, aes(x = Experimental_Condition, y = Gesture_Record_Count, fill = Delivery_Phase)) +
+  geom_boxplot(position = position_dodge(width = 0.75), outlier.shape = NA, alpha = 0.7) +
+  geom_jitter(aes(color = Delivery_Phase),
+  shape = 21, color = "black",  
+  position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.75),
+  alpha = 1, size = 2, stroke = 0.4) +
+  labs(x = "Condition", y = "Number of gesture tokens", 
+  fill = "Delivery phase", color = "Delivery phase") +
+  ggtitle("Use of gesture tokens") +
+  theme_exp()
+ggsave(here("plots", "ngestures_cond_phase.png"), width = 10, height = 6)
+```
+
+## Plot distribution response: Number of gesture tokens
+
+```{r poisson-dist-num-gtok}
+mean_value_sr <- mean(xdata$Gesture_Record_Count, na.rm = TRUE)
+variance_value_sr <- var(xdata$Gesture_Record_Count, na.rm = TRUE) 
+plot(table(xdata$Gesture_Record_Count)) 
+```
+Issue of overdispersion so we used a negative binomial model
+
+## Fit Negative binomial GLMM 
+
+```{r negbin-glmm-num-gtok}
+full.gtok <- glmer.nb(Gesture_Record_Count ~ Experimental_Condition * Delivery_Phase 
+                     + Age + Sex 
+                     + (1 | Subject), 
+                    data = xdata) 
+summary(full.gtok)
+```
+We tested for the effect of the interaction between Experimental_Condition and Delivery_Phase. We controlled for Individual to avoid pseudoreplication by including it as a random effect, and controlled for Age and for Sex by entering them as control fixed effects because they do not have enough levels to be included as random effects.
+
+## Assumptions
+
+### Overdispersion and random effect distribution
+
+```{r overdisp-reff-negbin-glmm-num-gtok}
+overdisp.test(full.gtok) 
+
+ranef.diagn.plot(full.gtok) 
+```
+No overdispersion issue.
+Distribution of random effect Subject is ok.
+
+### Multicollinearity
+
+```{r multcol-negbin-glmm-num-gtok}
+xx.gtok=lm(Gesture_Record_Count ~ Experimental_Condition + Delivery_Phase 
+            + Age + Sex, 
+            data = xdata)
+vif.gtok=vif(xx.gtok) 
+vif.gtok
+```
+No multicollinearity issue as all predictors have VIF values close to 1
+
+### Model stability 
+
+```{r modstab-negbin-glmm-num-gtok}
+full.gtok.stab=glmm.model.stab(model.res=full.gtok, data=xdata) 
+
+table(full.gtok.stab$detailed$lme4.warnings) #all 17 converged
+table(full.gtok.stab$detailed$opt.warnings) #all 17 converged
+
+full.gtok.stab.rd=round(full.gtok.stab$summary[, -1], 3) 
+full.gtok.stab.rd
+m.stab.plot(full.gtok.stab$summary[, -1], 3) 
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 1 - Persistence")
+write.table(full.gtok.stab.rd, file="Mstab_GLMM_gtokens.csv", row.names=T, col.names=T, sep="\t")
+```
+Model is slightly unstable for condition Goal not met
+
+## Results
+
+### Full-null model comparison
+
+```{r res-full-null-negbin-glmm-num-gtok}
+null.gtok<-glmer.nb(Gesture_Record_Count ~ Experimental_Condition + Delivery_Phase 
+                   + Age + Sex + (1 | Subject), 
+                   data = xdata)
+
+Chisq.gtok<-round(as.data.frame(anova(null.gtok, full.gtok, test="Chisq")), 3)
+Chisq.gtok
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 1 - Persistence")
+write.table(Chisq.gtok, file="Chisq_GLMM_gtokens.csv", row.names=T, col.names=T, sep="\t")
+```
+The full-null model comparison is significant, meaning the predictors in the full model significantly improve the fit of the model compared to the null model.
+
+### Summary results
+
+```{r res-coeffs-negbin-glmm-num-gtok}
+res.gtok.rd=round(summary(full.gtok)$coefficients, 3) 
+res.gtok.rd
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 1 - Persistence")
+write.table(res.gtok.rd, file="Res_GLMM_gtokens.csv", row.names=T, col.names=T, sep="\t")
+```
+As predicted, subjects persisted gesturing more (i.e., increased their use of gesture tokens from pre to post-delivery) in the Goal partially met condition as compared to the Goal met condition. However, against our predictions, there was no difference in the frequency of use of gesture tokens between the Goal not met condition and the Goal met condition. 
+
+N.B. Single variables in the interaction should not be interpreted (Delivery_Phase and Experimental_Condition) as well as Age and Sex because they are controls.
+
+### Post-hoc tests
+
+```{r res-posthoc-negbin-glmm-num-gtok}
+emm.gtok <- emmeans(full.gtok, ~ Experimental_Condition * Delivery_Phase)
+
+pw.comp.gtok.phase <- contrast(emm.gtok, interaction = c("pairwise", "pairwise"),
+                                 by = "Delivery_Phase")
+posthoc.gtok.phase <- summary(pw.comp.gtok.phase, adjust = "tukey")
+posthoc.gotk.phase.rd <- as.data.frame(lapply(posthoc.gtok.phase, function(x) {
+  if(is.numeric(x)) round(x, 3) else x
+}))
+posthoc.gotk.phase.rd
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 1 - Persistence")
+write.table(posthoc.gotk.phase.rd, file="Posthoc_Res_GLMM_gtokens.csv", row.names=T, col.names=T, sep="\t")
+```
+The Tukey post-hoc tests show:
+Pre-delivery: As predicted, we found no significant differences across conditions in the pre-delivery phase, suggesting that subjects could not predict what item they would be getting during pre-delivery. 
+Post-delivery: During post-delivery subjects also persisted gesturing more  in the Goal partially met condition as compared to the Goal met condition.
+
+### Effect sizes
+
+```{r res-reff-log-glmm-num-gtok}
+library(MuMIn)
+r.sq.gtok=r.squaredGLMM(object=full.gtok) 
+r.sq.gtok
+```
+
+### Confidence intervals 
+
+```{r res-cis-poisson-glmm-num-gtok}
+source("boot_glmm.r") 
+set.seed(123)
+boot.res.gtok=boot.glmm.pred(model.res=full.gtok, excl.warnings=F,
+                        nboots=1000, para=F)
+cis.gtok=round(boot.res.gtok$ci.estimates, 3)
+cis.gtok
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 1 - Persistence")
+write.table(cis.gtok, file="CI_GLMM_gtokens.csv", row.names=T, col.names=T, sep="\t")
+```
+
+### Plot for effect of interaction
+
+```{r plot-negbin-glmm-num-gtok}
+#Plot effect of interaction experimental condition*delivery phase on n gesture tokens
+plot.res.int.gtok <- cat_plot(full.gtok, pred = Experimental_Condition, 
+  modx = Delivery_Phase, data = xdata, 
+  x.label = "Experimental condition", y.label = "Number of gesture tokens") +
+  theme_exp() +
+  guides(fill="none") + labs(color = "Delivery phase", title="Effect of interaction on use of gesture tokens") +
+  ylim(0, NA) 
+
+plot.res.int.gtok.ed <- plot.res.int.gtok +
+  geom_jitter(data = xdata,
+              aes(x = Experimental_Condition,
+                  y = Gesture_Record_Count,
+                  color = Delivery_Phase),
+              position = position_jitterdodge(jitter.width = 0.2, dodge.width = 0.6),
+              alpha = 0.5,
+              size = 1.5,
+              inherit.aes = FALSE)
+plot.res.int.gtok.ed
+ggsave(here::here("plots", "Mod_ngest_tokens_int_rev.png"), width = 10, height = 6)
+```
+
+
+# Elaboration Model 
+
+To test for elaboration we compared the number of novel (i.e. not used during pre-delivery) as compared to repeated (used during pre-delivery) gesture tokens used during post-delivery across the three experimental conditions. Again, we predicted that, during post-delivery, subjects would elaborate their gesturing by using more often novel gesture types (rather than repeating gesture types already used during pre-delivery) when their goal is not met as compared to met or partially met (i.e., elaboration). 
+
+
+## Plot percentage of novel vs repeated gesture types during post-delivery across conditions 
+
+Percentage calculated by dividing the frequency tokens of novel or repeated gesture types by the total frequency of gesture tokens during post-delivery
+
+```{r novel-gest-cond-data-sort}
+#sort data
+xdata2 <- read.csv("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/dataframes/exp_nov_rep_gest_summary_df.csv")
+levels(xdata2$Experimental_Condition)[levels(xdata2$Experimental_Condition)=="Goal Not Met"] <- "Goal not met" # relevel
+levels(xdata2$Experimental_Condition)[levels(xdata2$Experimental_Condition)=="Goal Met"] <- "Goal met" # relevel
+levels(xdata2$Experimental_Condition)[levels(xdata2$Experimental_Condition)=="Goal Partially Met"] <- "Goal partially met" # relevel
+
+xdata2 <- subset(xdata2, ! Novel_Gest_Types_Used %in% c("NV")) 
+xdata2 <- droplevels(xdata2) 
+summary_novel_repeated <- xdata2 %>%
+  dplyr::group_by(Experimental_Condition) %>%
+  dplyr::summarize(
+    Novel_Gest_Types_Freq_Total = sum(Novel_Gest_Types_Count, na.rm = TRUE),
+    Repeated_Gest_Types_Freq_Total = sum(Repeated_Gest_Types_Count, na.rm = TRUE),
+    Post_Delivery_Gest_Types_Freq_Total= sum(Post_Delivery_Gest_Types_Count, na.rm = TRUE),
+    Novel_Gest_Types_Used_Percent = sum(Novel_Gest_Types_Count) / Post_Delivery_Gest_Types_Freq_Total,  
+    Repeated_Gest_Types_Used_Percent = sum(Repeated_Gest_Types_Count) / Post_Delivery_Gest_Types_Freq_Total,  
+    .groups = 'drop'
+  )
+
+#convert data to long format
+library(tidyr)
+summary_novel_repeated_long <- summary_novel_repeated %>%
+  pivot_longer(cols = c(Novel_Gest_Types_Used_Percent, Repeated_Gest_Types_Used_Percent, 
+                        Novel_Gest_Types_Freq_Total, Repeated_Gest_Types_Freq_Total), 
+               names_to = c("Novel_Repeated_Gest_Types", ".value"),
+    names_pattern = "(.*)_Gest_Types_(.*)"
+  )
+
+summary_novel_repeated_long <- summary_novel_repeated_long %>%
+  dplyr::rename(Novel_Repeated_Gest_Types_Freq_Total = Post_Delivery_Gest_Types_Freq_Total)
+
+plot_novrepgest_percent=ggplot(summary_novel_repeated_long, aes(x = Experimental_Condition, y = Used_Percent, 
+fill = factor(Novel_Repeated_Gest_Types, levels= c("Repeated", "Novel")))) +
+  geom_bar(stat = "identity")  +
+  labs(title = "Use of novel or repeated gesture types",
+       x = "Experimental condition",
+       y = "Percentage",
+       fill = " ") + theme_exp() +
+  scale_fill_scico_d(
+    palette = "bamako",
+    begin = 0.2,
+    end = 0.8) +
+  theme(
+    axis.title.x = element_text(face = "bold", family = "Times New Roman"),
+    axis.title.y = element_text(face = "bold", family = "Times New Roman"),
+    legend.title = element_text(face = "bold", family = "Times New Roman")
+  )
+plot_novrepgest_percent
+
+ggsave(here::here("plots", "Percent_nov_rep_type_gtokens.png"), plot = plot_novrepgest_percent, width = 10, height = 6)
+```
+
+## Data sorting 
+
+```{r model-freq-novel-rep-counts-cond-sort-data}
+xdata3 <- xdata2 %>%
+  pivot_longer(cols = c("Novel_Gest_Types_Count", "Repeated_Gest_Types_Count"),
+               names_to = "Nov_Rep_Type", 
+               values_to = "Gesture_Record_Count") %>%
+  mutate(Nov_Rep_Type = ifelse(Nov_Rep_Type == "Novel_Gest_Types_Count", "Novel", "Repeated"))
+xdata3$Nov_Rep_Type <- factor(xdata3$Nov_Rep_Type)
+xdata3$Nov_Rep_Type <- relevel(xdata3$Nov_Rep_Type, ref = "Repeated") #Set Repeated as reference level 
+```
+
+## Plot distribution response: Number of gesture tokens 
+
+```{r poisson-freq-nrtype-cond-dist-num-gtok}
+mean_value_sr <- mean(xdata3$Gesture_Record_Count, na.rm = TRUE)
+variance_value_sr <- var(xdata3$Gesture_Record_Count, na.rm = TRUE) 
+plot(table(xdata3$Gesture_Record_Count)) 
+```
+Skewed and there many 0s so we used a negative binomial model with 0 inflation (see later)
+
+## Fit Negative binomial GLMM with 0 inflation 
+
+```{r negbin-glmm-freq-nrtype-cond-gtok}
+library(glmmTMB)
+full.nrtype.gtok <- glmmTMB(Gesture_Record_Count ~ Experimental_Condition * Nov_Rep_Type + Age 
+                          + Sex +
+                          (1 | Subject), 
+                          ziformula = ~1,  
+                          family = nbinom2, 
+                          data = xdata3)
+summary(full.nrtype.gtok)
+```
+We tested for the effect of the interaction between Experimental_Condition and the type of gesturing (i.e., Nov_Rep_Type). Again, to avoid pseudoreplication we controlled for Individual by including it as a random effect, and controlled for Sex and Age by including them as control fixed effects.
+
+## Assumptions
+
+### Overdispersion and random effect distribution
+
+```{r overdisp-reff-negbin-glmm-freq-nrtype-cond-gtok}
+overdisp.test(full.nrtype.gtok) 
+
+ranef.diagn.plot(full.nrtype.gtok) 
+```
+No overdispersion issue.
+Distribution of random effect Subject ok.
+
+### Multicollinearity
+
+```{r multcol-negbin-glmm-nrtype-cond-gtok}
+xx.nrtype.gtok=lm(Gesture_Record_Count ~ Experimental_Condition + Nov_Rep_Type 
+            + Age + Sex, 
+            data = xdata3)
+vif.nrtype.gtok=vif(xx.nrtype.gtok) 
+vif.nrtype.gtok
+```
+No multicollinearity issue as all VIF values are close to 1.
+
+### Model stability 
+
+```{r modstab-negbin-glmm-nrtype-cond-gtok}
+full.nrtype.gtok.stab=glmmTMB.stab(model.res=full.nrtype.gtok, para=T, data=xdata3)
+
+table(full.nrtype.gtok.stab$detailed$converged) 
+full.nrtype.gtok.stab.rd=round(full.nrtype.gtok.stab$summary[, -1], 3)
+full.nrtype.gtok.stab.rd
+
+m.stab.plot(full.nrtype.gtok.stab$summary[, -1])
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 2 - Elaboration")
+write.table(full.nrtype.gtok.stab.rd, file="Mstab_GLMM_nov_rep_gtoken.csv", row.names=T, col.names=T, sep="\t")
+```
+Model is stable
+
+## Results
+
+### Full-null model comparison
+
+```{r res-full-null-negbin-glmm-nrtype-cond-gtok}
+null.nrtype.gtok<-glmmTMB(Gesture_Record_Count ~ Experimental_Condition + Nov_Rep_Type + Age + Sex +
+                          (1 | Subject), 
+                          ziformula = ~1,  
+                          family = nbinom2, 
+                          data = xdata3)
+
+Chisq.nrtype.gtok<-round(as.data.frame(anova(null.nrtype.gtok, full.nrtype.gtok, test="Chisq")), 3)
+Chisq.nrtype.gtok
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 2 - Elaboration")
+write.table(Chisq.nrtype.gtok, file="Chisq_GLMM_nov_rep_gtoken.csv", row.names=T, col.names=T, sep="\t")
+```
+The full-null model comparison is significant, meaning the predictors in the full model significantly improve the fit of the model compared to the null model.
+
+### Summary results
+
+```{r res-coeffs-negbin-glmm-nrtype-cond-gtok}
+res.nrtype.gtok=summary(full.nrtype.gtok)$coefficients
+res.nrtype.gtok.rd=round(res.nrtype.gtok$cond, 3)
+res.nrtype.gtok.rd
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 2 - Elaboration")
+write.table(res.nrtype.gtok.rd, file="Res_GLMM_nov_rep_gtokens.csv", row.names=T, col.names=T, sep="\t")
+```
+As predicted, we found that subjects used more often novel gesture types (rather than repetitions of gesture types used during pre-delivery) in the Goal not met condition as compared to the Goal met condition.
+N.B. Single variables in interaction results (and Age, Sex, control) should not be interpreted (Nov_Rep_Type and Experimental_Condition).
+
+### Post-hoc tests
+
+```{r res-posthoc-negbin-glmm-nrtype-cond-gtok}
+emm.nrtype.gtok <- emmeans(full.nrtype.gtok, ~ Experimental_Condition * Nov_Rep_Type)
+
+pw.comp.nrtype.gtok <- contrast(emm.nrtype.gtok, interaction = c("pairwise", "pairwise"))
+
+posthoc.nrtype.gtok <- summary(pw.comp.nrtype.gtok, adjust = "sidak") #changed to sidak
+posthoc.nrtype.gtok.rd <- as.data.frame(lapply(posthoc.nrtype.gtok, function(x) {
+  if(is.numeric(x)) round(x, 3) else x
+}))
+posthoc.nrtype.gtok.rd
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 2 - Elaboration")
+write.table(posthoc.nrtype.gtok.rd, file="Posthoc_Res_GLMM_nov_rep_gtokens.csv", row.names=T, col.names=T, sep="\t")
+```
+The Sidak post-hoc test shows:
+Against our predictions, we found no difference in the frequency of use of novel as compared to repeated gesture types between the Goal Partially Met and Goal Not Met conditions.
+
+### Effect sizes
+
+```{r res-reff-log-glmm-nrtype-cond-gtok}
+library(MuMIn)
+r.sq.nrtype.gtok=r.squaredGLMM(object=full.nrtype.gtok) 
+r.sq.nrtype.gtok
+```
+
+### Confidence intervals 
+
+```{r res-cis-poisson-glmm-nrtype-cond-gtok}
+cis.nrtype.gtok=confint(full.nrtype.gtok, method = "Wald")
+cis.nrtype.gtok.rd=round(cis.nrtype.gtok, 3)
+cis.nrtype.gtok.rd
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 2 - Elaboration")
+write.table(cis.nrtype.gtok.rd, file="CI_GLMM_nov_rep_gtokens.csv", row.names=T, col.names=T, sep="\t")
+```
+
+# Supplementary Diversity Model 
+
+To test for diversity, we compared the number of different gesture types used before and after delivery in the three experimental conditions. Again, here the predictions are that, from pre- to post-delivery, elephants will increase their use of gesture types in the Goal Not Met as compared to the Goal Met and Goal partially met conditions to increase the likelihood of producing gesture types effective at achieving the desired item. 
+
+
+## Plot distribution response: Number of gesture types 
+
+```{r poisson-dist-num-gtype}
+mean_value_st <- mean(xdata$Gesture_Type_Count, na.rm = TRUE)
+variance_value_st <- var(xdata$Gesture_Type_Count, na.rm = TRUE) 
+plot(table(xdata$Gesture_Type_Count)) 
+```
+There are a few 0s and doesn´t seem overdispersed so used a poisson model 
+
+## Fit poisson model
+
+```{r mod-poisson-glmm-num-gtype}
+full.gtype=glmer(Gesture_Type_Count ~ Experimental_Condition * Delivery_Phase + Sex + Age + Gesture_Record_Count
+            + (1 | Subject), 
+            data = xdata,
+            family=poisson) 
+full.gtype
+```
+We tested for the effect of the interaction between Experimental_Condition and Delivery_Phase. To avoid pseudoreplication we controlled for Individual by entering it as a random effect, and we controlled for Age and Sex by including them as control fixed effects.
+
+## Assumptions
+
+### Overdispersion and random effect distribution
+
+```{r overdisp-reff-poisson-glmm-num-gtype}
+overdisp.test(full.gtype)
+
+ranef.diagn.plot(full.gtype)
+```
+No issue of overdispersion. Distribution of random effect Subject is ok.
+
+
+### Multicollinearity
+
+```{r multcol-poisson-glmm-num-gtype}
+xx.gtype=lm(Gesture_Type_Count ~ Experimental_Condition + Delivery_Phase + 
+            + Age + Sex + Gesture_Record_Count,
+            data = xdata)
+vif.gtype=vif(xx.gtype)
+vif.gtype
+```
+No multicollinearity issue
+
+
+### Model stability
+
+```{r modstab-poisson-glmm-num-gtype}
+control=glmerControl(optimizer="bobyqa", optCtrl=list(maxfun=100000)) 
+full.gtype.stab=glmm.model.stab(model.res=full.gtype, data=xdata, contr=control) 
+table(full.gtype.stab$detailed$lme4.warnings) 
+table(full.gtype.stab$detailed$opt.warnings) 
+
+full.gtype.stab.rd=round(full.gtype.stab$summary[, -1], 3)
+full.gtype.stab.rd
+m.stab.plot(full.gtype.stab$summary[, -1], 3)
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 3 - Diversity")
+write.table(full.gtype.stab.rd, file="Mstab_GLMM_gtypes.csv", row.names=T, col.names=T, sep="\t")
+```
+The model is very unstable for the Intercept, Age, and some interaction terms so we decided not to interpret the findings but to provide them as Supplementary Information for reference. 
+
+## Supplementary Results
+
+### Full-null model comparison
+
+```{r res-full-null-poisson-glmm-num-gtype}
+null.gtype=glmer(Gesture_Type_Count ~ Experimental_Condition + Delivery_Phase + Age + Sex + Gesture_Record_Count
+            + (1 | Subject), 
+            data = xdata,
+            family=poisson)
+
+Chisq.gtype<-round(as.data.frame(anova(null.gtype, full.gtype, test="Chisq")), 3)
+Chisq.gtype
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 3 - Diversity")
+write.table(Chisq.gtype, file="Chisq_GLMM_gtypes.csv", row.names=T, col.names=T, sep="\t")
+
+#But check correlation of Gesture_Type_Count (gesture type n) and Gesture_Record_Count (gesture token n)
+cor_gtype_gtok=cor.test(xdata$Gesture_Type_Count, xdata$Gesture_Record_Count, method = "pearson")
+cor_gtype_gtok
+```
+The full-null model comparison is non-significant, meaning the predictors in the full model significantly do not improve the fit of the model. However, the model is unstable (See model stability) and number of gesture tokens and number of gesture types are strongly correlated (see below), possibly leading to a loss of statistical power.
+
+### Supplementary Post-hoc tests for pre-delivery phase
+
+```{r res-posthoc-negbin-glmm-num-gtype}
+emm.gtype <- emmeans(full.gtype, ~ Experimental_Condition * Delivery_Phase)
+
+pw.comp.gtype.phase <- contrast(emm.gtype, interaction = c("pairwise", "pairwise"),
+                                 by = "Delivery_Phase")
+posthoc.gtype.phase <- summary(pw.comp.gtype.phase, adjust = "tukey")
+posthoc.gtype.phase.rd <- as.data.frame(lapply(posthoc.gtype.phase, function(x) {
+  if(is.numeric(x)) round(x, 3) else x
+}))
+posthoc.gtype.phase.rd 
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment/results/Model 3 - Diversity")
+write.table(posthoc.gtype.phase.rd, file="Posthoc_Res_GLMM_gtype_predel.csv", row.names=T, col.names=T, sep="\t")
+```
+
+# Save working directory
+
+```{r save-directory}
+setwd("/Users/ve/Desktop/PhD/Analysis/Chapter 2 - Experiment")
+save.image("Experiment analysis.Rdata") 
+```
+
