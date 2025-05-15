@@ -1,0 +1,151 @@
+"File","Subject","Sex","Age","Group","Experimental_Condition","Delivery_Phase","Gesture_Record_Count","Gesture_Type_Count"
+"WildHorizons_VE_2024-04-25_Trial02_CC_VEC051_noexp.eaf","Coco","Female","Old adult","WildHorizons2","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-25_Trial02_CC_VEC051_post.eaf","Coco","Female","Old adult","WildHorizons2","Goal met","Post-delivery",4,3
+"WildHorizons_VE_2024-04-25_Trial02_CC_VEC051_pre.eaf","Coco","Female","Old adult","WildHorizons2","Goal met","Pre-delivery",6,2
+"WildHorizons_VE_2024-04-21_Trial03_CC_VEC041_noexp.eaf","Coco","Female","Old adult","WildHorizons2","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-21_Trial03_CC_VEC041_post.eaf","Coco","Female","Old adult","WildHorizons2","Goal not met","Post-delivery",1,1
+"WildHorizons_VE_2024-04-21_Trial03_CC_VEC041_pre.eaf","Coco","Female","Old adult","WildHorizons2","Goal not met","Pre-delivery",6,2
+"WildHorizons_VE_2024-04-23_Trial01_CC_VEC045_noexp.eaf","Coco","Female","Old adult","WildHorizons2","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-23_Trial01_CC_VEC045_post.eaf","Coco","Female","Old adult","WildHorizons2","Goal partially met","Post-delivery",3,3
+"WildHorizons_VE_2024-04-23_Trial01_CC_VEC045_pre.eaf","Coco","Female","Old adult","WildHorizons2","Goal partially met","Pre-delivery",3,2
+"eleCREW_VE_2024-04-01_Exp_Trial03_DT_VEC020_noexp.eaf","Detema","Male","Young adult","eleCREW","Goal met","No-experimenter",0,0
+"eleCREW_VE_2024-04-01_Exp_Trial03_DT_VEC020_post.eaf","Detema","Male","Young adult","eleCREW","Goal met","Post-delivery",0,0
+"eleCREW_VE_2024-04-01_Exp_Trial03_DT_VEC020_pre.eaf","Detema","Male","Young adult","eleCREW","Goal met","Pre-delivery",2,2
+"eleCREW_VE_2024-03-25_Exp_Trial01_DT_VEC003_noexp.eaf","Detema","Male","Young adult","eleCREW","Goal not met","No-experimenter",0,0
+"eleCREW_VE_2024-03-25_Exp_Trial01_DT_VEC003_post.eaf","Detema","Male","Young adult","eleCREW","Goal not met","Post-delivery",0,0
+"eleCREW_VE_2024-03-25_Exp_Trial01_DT_VEC003_pre.eaf","Detema","Male","Young adult","eleCREW","Goal not met","Pre-delivery",5,3
+"eleCREW_VE_2024-03-28_Exp_Trial02_DT_VEC012_noexp.eaf","Detema","Male","Young adult","eleCREW","Goal partially met","No-experimenter",0,0
+"eleCREW_VE_2024-03-28_Exp_Trial02_DT_VEC012_post.eaf","Detema","Male","Young adult","eleCREW","Goal partially met","Post-delivery",3,1
+"eleCREW_VE_2024-03-28_Exp_Trial02_DT_VEC012_pre.eaf","Detema","Male","Young adult","eleCREW","Goal partially met","Pre-delivery",3,3
+"eleCREW_VE_2024-03-24_Exp_Trial03_DM_VEC002_noexp.eaf","Doma","Male","Old adult","eleCREW","Goal met","No-experimenter",0,0
+"eleCREW_VE_2024-03-24_Exp_Trial03_DM_VEC002_post.eaf","Doma","Male","Old adult","eleCREW","Goal met","Post-delivery",1,1
+"eleCREW_VE_2024-03-24_Exp_Trial03_DM_VEC002_pre.eaf","Doma","Male","Old adult","eleCREW","Goal met","Pre-delivery",8,2
+"eleCREW_VE_2024-03-27_Exp_Trial01_DM_VEC009_noexp.eaf","Doma","Male","Old adult","eleCREW","Goal not met","No-experimenter",0,0
+"eleCREW_VE_2024-03-27_Exp_Trial01_DM_VEC009_post.eaf","Doma","Male","Old adult","eleCREW","Goal not met","Post-delivery",2,2
+"eleCREW_VE_2024-03-27_Exp_Trial01_DM_VEC009_pre.eaf","Doma","Male","Old adult","eleCREW","Goal not met","Pre-delivery",1,1
+"eleCREW_VE_2024-03-31_Exp_Trial02_DM_VEC017_noexp.eaf","Doma","Male","Old adult","eleCREW","Goal partially met","No-experimenter",0,0
+"eleCREW_VE_2024-03-31_Exp_Trial02_DM_VEC017_post.eaf","Doma","Male","Old adult","eleCREW","Goal partially met","Post-delivery",1,1
+"eleCREW_VE_2024-03-31_Exp_Trial02_DM_VEC017_pre.eaf","Doma","Male","Old adult","eleCREW","Goal partially met","Pre-delivery",2,1
+"WildHorizons_VE_2024-04-15_Trial02_EM_VEC036_noexp.eaf","Emely","Female","Young adult","WildHorizons1","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-15_Trial02_EM_VEC036_post.eaf","Emely","Female","Young adult","WildHorizons1","Goal met","Post-delivery",0,0
+"WildHorizons_VE_2024-04-15_Trial02_EM_VEC036_pre.eaf","Emely","Female","Young adult","WildHorizons1","Goal met","Pre-delivery",2,2
+"WildHorizons_VE_2024-04-11_Trial02_EM_VEC027_noexp.eaf","Emely","Female","Young adult","WildHorizons1","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-11_Trial02_EM_VEC027_post.eaf","Emely","Female","Young adult","WildHorizons1","Goal not met","Post-delivery",0,0
+"WildHorizons_VE_2024-04-11_Trial02_EM_VEC027_pre.eaf","Emely","Female","Young adult","WildHorizons1","Goal not met","Pre-delivery",0,0
+"WildHorizons_VE_2024-04-13_Trial01_EM_VEC031_noexp.eaf","Emely","Female","Young adult","WildHorizons1","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-13_Trial01_EM_VEC031_post.eaf","Emely","Female","Young adult","WildHorizons1","Goal partially met","Post-delivery",9,4
+"WildHorizons_VE_2024-04-13_Trial01_EM_VEC031_pre.eaf","Emely","Female","Young adult","WildHorizons1","Goal partially met","Pre-delivery",1,1
+"eleCREW_VE_2024-03-25_Exp_Trial03_HW_VEC006_noexp.eaf","Hwange","Female","Young adult","eleCREW","Goal met","No-experimenter",0,0
+"eleCREW_VE_2024-03-25_Exp_Trial03_HW_VEC006_post.eaf","Hwange","Female","Young adult","eleCREW","Goal met","Post-delivery",1,1
+"eleCREW_VE_2024-03-28_Exp_Trial01_HW_VEC011_noexp.eaf","Hwange","Female","Young adult","eleCREW","Goal not met","No-experimenter",0,0
+"eleCREW_VE_2024-03-28_Exp_Trial01_HW_VEC011_post.eaf","Hwange","Female","Young adult","eleCREW","Goal not met","Post-delivery",1,1
+"eleCREW_VE_2024-03-28_Exp_Trial01_HW_VEC011_pre.eaf","Hwange","Female","Young adult","eleCREW","Goal not met","Pre-delivery",0,0
+"eleCREW_VE_2024-04-01_Exp_Trial02_HW_VEC019_noexp.eaf","Hwange","Female","Young adult","eleCREW","Goal partially met","No-experimenter",0,0
+"eleCREW_VE_2024-04-01_Exp_Trial02_HW_VEC019_post.eaf","Hwange","Female","Young adult","eleCREW","Goal partially met","Post-delivery",0,0
+"eleCREW_VE_2024-04-01_Exp_Trial02_HW_VEC019_pre.eaf","Hwange","Female","Young adult","eleCREW","Goal partially met","Pre-delivery",1,1
+"WildHorizons_VE_2024-04-19_Trial01_JM_VEC037_noexp.eaf","Jambo","Male","Old adult","WildHorizons2","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-19_Trial01_JM_VEC037_post.eaf","Jambo","Male","Old adult","WildHorizons2","Goal met","Post-delivery",7,4
+"WildHorizons_VE_2024-04-19_Trial01_JM_VEC037_pre.eaf","Jambo","Male","Old adult","WildHorizons2","Goal met","Pre-delivery",11,7
+"WildHorizons_VE_2024-04-22_Trial02_JM_VEC043_noexp.eaf","Jambo","Male","Old adult","WildHorizons2","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-22_Trial02_JM_VEC043_post.eaf","Jambo","Male","Old adult","WildHorizons2","Goal not met","Post-delivery",5,5
+"WildHorizons_VE_2024-04-22_Trial02_JM_VEC043_pre.eaf","Jambo","Male","Old adult","WildHorizons2","Goal not met","Pre-delivery",5,4
+"WildHorizons_VE_2024-04-24_Trial03_JB_VEC049_noexp.eaf","Jambo","Male","Old adult","WildHorizons2","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-24_Trial03_JB_VEC049_post.eaf","Jambo","Male","Old adult","WildHorizons2","Goal partially met","Post-delivery",5,5
+"WildHorizons_VE_2024-04-24_Trial03_JB_VEC049_pre.eaf","Jambo","Male","Old adult","WildHorizons2","Goal partially met","Pre-delivery",5,4
+"WildHorizons_VE_2024-04-12_Trial03_JN_VEC030_noexp.eaf","Jenet","Female","Young adult","WildHorizons1","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-12_Trial03_JN_VEC030_post.eaf","Jenet","Female","Young adult","WildHorizons1","Goal met","Post-delivery",0,0
+"WildHorizons_VE_2024-04-12_Trial03_JN_VEC030_pre.eaf","Jenet","Female","Young adult","WildHorizons1","Goal met","Pre-delivery",2,1
+"WildHorizons_VE_2024-04-14_Trial01_JN_VEC052_ne-exp.eaf","Jenet","Female","Young adult","WildHorizons1","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-14_Trial01_JN_VEC052_post.eaf","Jenet","Female","Young adult","WildHorizons1","Goal not met","Post-delivery",0,0
+"WildHorizons_VE_2024-04-14_Trial01_JN_VEC052_pre.eaf","Jenet","Female","Young adult","WildHorizons1","Goal not met","Pre-delivery",0,0
+"WildHorizons_VE_2024-04-10_Trial01_JN_VEC024_noexp.eaf","Jenet","Female","Young adult","WildHorizons1","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-10_Trial01_JN_VEC024_post.eaf","Jenet","Female","Young adult","WildHorizons1","Goal partially met","Post-delivery",0,0
+"WildHorizons_VE_2024-04-10_Trial01_JN_VEC024_pre.eaf","Jenet","Female","Young adult","WildHorizons1","Goal partially met","Pre-delivery",1,1
+"WildHorizons_VE_2024-04-09_Trial02_JK_VEC023_noexp.eaf","Jock","Male","Old adult","WildHorizons1","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-09_Trial02_JK_VEC023_post.eaf","Jock","Male","Old adult","WildHorizons1","Goal met","Post-delivery",3,3
+"WildHorizons_VE_2024-04-09_Trial02_JK_VEC023_pre.eaf","Jock","Male","Old adult","WildHorizons1","Goal met","Pre-delivery",13,6
+"WildHorizons_VE_2024-04-16_Trial01_JK_VEC029_noexp.eaf","Jock","Male","Old adult","WildHorizons1","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-16_Trial01_JK_VEC029_post.eaf","Jock","Male","Old adult","WildHorizons1","Goal not met","Post-delivery",4,3
+"WildHorizons_VE_2024-04-16_Trial01_JK_VEC029_pre.eaf","Jock","Male","Old adult","WildHorizons1","Goal not met","Pre-delivery",1,1
+"WildHorizons_VE_2024-04-14_Trial03_JK_VEC034_noexp.eaf","Jock","Male","Old adult","WildHorizons1","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-14_Trial03_JK_VEC034_post.eaf","Jock","Male","Old adult","WildHorizons1","Goal partially met","Post-delivery",2,2
+"WildHorizons_VE_2024-04-14_Trial03_JK_VEC034_pre.eaf","Jock","Male","Old adult","WildHorizons1","Goal partially met","Pre-delivery",4,3
+"eleCREW_VE_2024-03-27_Exp_Trial03_LD_VEC010_noexp.eaf","Laduma","Male","Young adult","eleCREW","Goal met","No-experimenter",0,0
+"eleCREW_VE_2024-03-27_Exp_Trial03_LD_VEC010_post.eaf","Laduma","Male","Young adult","eleCREW","Goal met","Post-delivery",2,1
+"eleCREW_VE_2024-03-27_Exp_Trial03_LD_VEC010_pre.eaf","Laduma","Male","Young adult","eleCREW","Goal met","Pre-delivery",3,1
+"eleCREW_VE_2024-03-31_Exp_Trial01_LD_VEC016_noexp.eaf","Laduma","Male","Young adult","eleCREW","Goal not met","No-experimenter",0,0
+"eleCREW_VE_2024-03-31_Exp_Trial01_LD_VEC016_post.eaf","Laduma","Male","Young adult","eleCREW","Goal not met","Post-delivery",3,2
+"eleCREW_VE_2024-03-31_Exp_Trial01_LD_VEC016_pre.eaf","Laduma","Male","Young adult","eleCREW","Goal not met","Pre-delivery",6,3
+"eleCREW_VE_2024-03-24_Exp_Trial02_LD_VEC001_noexp.eaf","Laduma","Male","Young adult","eleCREW","Goal partially met","No-experimenter",0,0
+"eleCREW_VE_2024-03-24_Exp_Trial02_LD_VEC001_post.eaf","Laduma","Male","Young adult","eleCREW","Goal partially met","Post-delivery",9,2
+"eleCREW_VE_2024-03-24_Exp_Trial02_LD_VEC001_pre.eaf","Laduma","Male","Young adult","eleCREW","Goal partially met","Pre-delivery",4,2
+"eleCREW_VE_2024-04-02_Exp_Trial03_MN_VEC022_noexp.eaf","Mainos","Male","Young adult","eleCREW","Goal met","No-experimenter",0,0
+"eleCREW_VE_2024-04-02_Exp_Trial03_MN_VEC022_post.eaf","Mainos","Male","Young adult","eleCREW","Goal met","Post-delivery",3,1
+"eleCREW_VE_2024-04-02_Exp_Trial03_MN_VEC022_pre.eaf","Mainos","Male","Young adult","eleCREW","Goal met","Pre-delivery",3,2
+"eleCREW_VE_2024-03-26_Exp_Trial01_MN_VEC007_noexp.eaf","Mainos","Male","Young adult","eleCREW","Goal not met","No-experimenter",0,0
+"eleCREW_VE_2024-03-26_Exp_Trial01_MN_VEC007_post.eaf","Mainos","Male","Young adult","eleCREW","Goal not met","Post-delivery",1,1
+"eleCREW_VE_2024-03-26_Exp_Trial01_MN_VEC007_pre.eaf","Mainos","Male","Young adult","eleCREW","Goal not met","Pre-delivery",1,1
+"eleCREW_VE_2024-03-29_Exp_Trial02_MN_VEC015_noexp.eaf","Mainos","Male","Young adult","eleCREW","Goal partially met","No-experimenter",0,0
+"eleCREW_VE_2024-03-29_Exp_Trial02_MN_VEC015_pre.eaf","Mainos","Male","Young adult","eleCREW","Goal partially met","Pre-delivery",2,2
+"eleCREW_VE_2024-03-28_Exp_Trial03_MK_VEC013_noexp.eaf","Moka","Male","Old adult","eleCREW","Goal met","No-experimenter",0,0
+"eleCREW_VE_2024-03-28_Exp_Trial03_MK_VEC013_post.eaf","Moka","Male","Old adult","eleCREW","Goal met","Post-delivery",0,0
+"eleCREW_VE_2024-03-28_Exp_Trial03_MK_VEC013_pre.eaf","Moka","Male","Old adult","eleCREW","Goal met","Pre-delivery",4,3
+"eleCREW_VE_2024-04-01_Exp_Trial01_MK_VEC018_noexp.eaf","Moka","Male","Old adult","eleCREW","Goal not met","No-experimenter",0,0
+"eleCREW_VE_2024-04-01_Exp_Trial01_MK_VEC018_post.eaf","Moka","Male","Old adult","eleCREW","Goal not met","Post-delivery",9,5
+"eleCREW_VE_2024-04-01_Exp_Trial01_MK_VEC018_pre.eaf","Moka","Male","Old adult","eleCREW","Goal not met","Pre-delivery",1,1
+"eleCREW_VE_2024-03-25_Exp_Trial02_MK_VEC004_noexp.eaf","Moka","Male","Old adult","eleCREW","Goal partially met","No-experimenter",0,0
+"eleCREW_VE_2024-03-25_Exp_Trial02_MK_VEC004_post.eaf","Moka","Male","Old adult","eleCREW","Goal partially met","Post-delivery",4,2
+"eleCREW_VE_2024-03-25_Exp_Trial02_MK_VEC004_pre.eaf","Moka","Male","Old adult","eleCREW","Goal partially met","Pre-delivery",13,5
+"WildHorizons_VE_2024-04-14_Trial02_NL_VEC033_noexp.eaf","Naledi","Female","Young adult","WildHorizons1","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-14_Trial02_NL_VEC033_post.eaf","Naledi","Female","Young adult","WildHorizons1","Goal met","Post-delivery",2,1
+"WildHorizons_VE_2024-04-14_Trial02_NL_VEC033_pre.eaf","Naledi","Female","Young adult","WildHorizons1","Goal met","Pre-delivery",1,1
+"WildHorizons_VE_2024-04-10_Trial02_NL_VEC025_noexp.eaf","Naledi","Female","Young adult","WildHorizons1","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-10_Trial02_NL_VEC025_post.eaf","Naledi","Female","Young adult","WildHorizons1","Goal not met","Post-delivery",2,1
+"WildHorizons_VE_2024-04-10_Trial02_NL_VEC025_pre.eaf","Naledi","Female","Young adult","WildHorizons1","Goal not met","Pre-delivery",3,2
+"WildHorizons_VE_2024-04-12_Trial01_NL_VEC028_noexp.eaf","Naledi","Female","Young adult","WildHorizons1","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-12_Trial01_NL_VEC028_post.eaf","Naledi","Female","Young adult","WildHorizons1","Goal partially met","Post-delivery",3,3
+"WildHorizons_VE_2024-04-12_Trial01_NL_VEC028_pre.eaf","Naledi","Female","Young adult","WildHorizons1","Goal partially met","Pre-delivery",4,3
+"WildHorizons_VE_2024-04-22_Trial03_NB_VEC044_noexp.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-22_Trial03_NB_VEC044_post.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal met","Post-delivery",1,1
+"WildHorizons_VE_2024-04-22_Trial03_NB_VEC044_pre.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal met","Pre-delivery",2,1
+"WildHorizons_VE_2024-04-24_Trial01_NB_VEC047_noexp.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-24_Trial01_NB_VEC047_post.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal not met","Post-delivery",2,1
+"WildHorizons_VE_2024-04-24_Trial01_NB_VEC047_pre.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal not met","Pre-delivery",1,1
+"WildHorizons_VE_2024-04-19_Trial03_NB_VEC039_noexp.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-19_Trial03_NB_VEC039_post.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal partially met","Post-delivery",6,4
+"WildHorizons_VE_2024-04-19_Trial03_NB_VEC039_pre.eaf","Ntombe","Female","Young adult","WildHorizons2","Goal partially met","Pre-delivery",3,2
+"WildHorizons_VE_2024-04-11_Trial01_PF_VEC026_noexp.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-11_Trial01_PF_VEC026_post.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal met","Post-delivery",1,1
+"WildHorizons_VE_2024-04-11_Trial01_PF_VEC026_pre.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal met","Pre-delivery",3,2
+"WildHorizons_VE_2024-04-13_Trial02_PF_VEC032_noexp.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-13_Trial02_PF_VEC032_post.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal not met","Post-delivery",5,4
+"WildHorizons_VE_2024-04-13_Trial02_PF_VEC032_pre.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal not met","Pre-delivery",10,8
+"WildHorizons_VE_2024-04-15_Trial01_PF_VEC035_noexp.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-15_Trial01_PF_VEC035_post.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal partially met","Post-delivery",5,3
+"WildHorizons_VE_2024-04-15_Trial01_PF_VEC035_pre.eaf","Pfumo","Male","Young adult","WildHorizons1","Goal partially met","Pre-delivery",7,5
+"WildHorizons_VE_2024-04-24_Trial02_TW_VEC048_noexp.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-24_Trial02_TW_VEC048_post.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal met","Post-delivery",1,1
+"WildHorizons_VE_2024-04-24_Trial02_TW_VEC048_pre.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal met","Pre-delivery",2,2
+"WildHorizons_VE_2024-04-19_Trial02_TW_VEC038_noexp.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-19_Trial02_TW_VEC038_post.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal not met","Post-delivery",0,0
+"WildHorizons_VE_2024-04-19_Trial02_TW_VEC038_pre.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal not met","Pre-delivery",3,3
+"WildHorizons_VE_2024-04-22_Trial01_TW_VEC042_noexp.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-22_Trial01_TW_VEC042_post.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal partially met","Post-delivery",3,2
+"WildHorizons_VE_2024-04-22_Trial01_TW_VEC042_pre.eaf","Tandiwhe","Female","Young adult","WildHorizons2","Goal partially met","Pre-delivery",1,1
+"eleCREW_VE_2024-03-26_Exp_Trial03_TT_VEC008_noexp.eaf","Tatu","Female","Old adult","eleCREW","Goal met","No-experimenter",0,0
+"eleCREW_VE_2024-03-26_Exp_Trial03_TT_VEC008_post.eaf","Tatu","Female","Old adult","eleCREW","Goal met","Post-delivery",0,0
+"eleCREW_VE_2024-03-26_Exp_Trial03_TT_VEC008_pre.eaf","Tatu","Female","Old adult","eleCREW","Goal met","Pre-delivery",3,2
+"eleCREW_VE_2024-03-29_Exp_Trial01_TT_VEC014_noexp.eaf","Tatu","Female","Old adult","eleCREW","Goal not met","No-experimenter",0,0
+"eleCREW_VE_2024-03-29_Exp_Trial01_TT_VEC014_pre.eaf","Tatu","Female","Old adult","eleCREW","Goal not met","Pre-delivery",13,5
+"eleCREW_VE_2024-04-02_Exp_Trial02_TT_VEC021_noexp.eaf","Tatu","Female","Old adult","eleCREW","Goal partially met","No-experimenter",0,0
+"eleCREW_VE_2024-04-02_Exp_Trial02_TT_VEC021_post.eaf","Tatu","Female","Old adult","eleCREW","Goal partially met","Post-delivery",0,0
+"eleCREW_VE_2024-04-02_Exp_Trial02_TT_VEC021_pre.eaf","Tatu","Female","Old adult","eleCREW","Goal partially met","Pre-delivery",3,1
+"WildHorizons_VE_2024-04-23_Trial03_TN_VEC046_noexp.eaf","Tendai","Female","Young adult","WildHorizons2","Goal met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-23_Trial03_TN_VEC046_post.eaf","Tendai","Female","Young adult","WildHorizons2","Goal met","Post-delivery",1,1
+"WildHorizons_VE_2024-04-23_Trial03_TN_VEC046_pre.eaf","Tendai","Female","Young adult","WildHorizons2","Goal met","Pre-delivery",5,4
+"WildHorizons_VE_2024-04-25_Trial01_TN_VEC050_noexp.eaf","Tendai","Female","Young adult","WildHorizons2","Goal not met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-25_Trial01_TN_VEC050_post.eaf","Tendai","Female","Young adult","WildHorizons2","Goal not met","Post-delivery",1,1
+"WildHorizons_VE_2024-04-25_Trial01_TN_VEC050_pre.eaf","Tendai","Female","Young adult","WildHorizons2","Goal not met","Pre-delivery",4,3
+"WildHorizons_VE_2024-04-21_Trial02_TN_VEC040_noexp.eaf","Tendai","Female","Young adult","WildHorizons2","Goal partially met","No-experimenter",0,0
+"WildHorizons_VE_2024-04-21_Trial02_TN_VEC040_post.eaf","Tendai","Female","Young adult","WildHorizons2","Goal partially met","Post-delivery",5,2
+"WildHorizons_VE_2024-04-21_Trial02_TN_VEC040_pre.eaf","Tendai","Female","Young adult","WildHorizons2","Goal partially met","Pre-delivery",5,2
